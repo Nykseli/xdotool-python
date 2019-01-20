@@ -1,0 +1,5 @@
+.vscode
+build/
+
+xdotoolsrc/.*o
+xdotoolsrc/testi
