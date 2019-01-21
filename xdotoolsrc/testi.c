@@ -1,5 +1,5 @@
 
-#include "cmd_key.h"
+#include "cmd.h"
 #include "xdo.h"
 #include "xdotool.h"
 

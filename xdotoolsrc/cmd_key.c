@@ -51,7 +51,6 @@ int cmd_key(context_t *context, char* cmd, char* value) {
 
     for (j = 0; j < repeat; j++) {
       for (i = 0; i < context->argc; i++) {
-        printf("%s\n", value);
         if (is_command(value)) {
           max_arg = i;
           break;

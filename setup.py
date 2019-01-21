@@ -2,7 +2,7 @@
 
 from distutils.core import setup, Extension
 
-keymodule = Extension('xdotool_py',
+xdotoolc = Extension('_xdotool',
                         include_dirs=['xdotoolsrc',
                         '/usr/include/',
                         '/usr/include/X11',
@@ -11,13 +11,11 @@ keymodule = Extension('xdotool_py',
                         sources=['xdotoolsrc/tool.c',
                                 'xdotoolsrc/xdo.c',
                                 'xdotoolsrc/xdotool.c',
-                                'xdotoolsrc/cmd_key.c'
+                                'xdotoolsrc/cmd_key.c',
+                                'xdotoolsrc/cmd_click.c',
+                                'xdotoolsrc/cmd_mousemove.c',
+                                'xdotoolsrc/cmd_mousemove_relative.c'
                                 ],
-                        # extra_objects=[
-                        #         'xdotoolsrc/xdo.o',
-                        #         'xdotoolsrc/xdotool.o',
-                        #         'xdotoolsrc/cmd_key.o'
-                        # ],
                         extra_compile_args=[
                                 '-Wall',
                                 '-O0',
@@ -26,20 +24,19 @@ keymodule = Extension('xdotool_py',
                         extra_link_args=[
                                 '-L.',
                                  #'-lxdo',
-                                  '-Xlinker',
-                                   '-rpath',
-                                   '/usr/local/lib',
-                                     '-lm',
-                                   '-lX11',
-                                    '-lrt',
-                                    '-lXtst',
-                                     '-lXinerama',
-                                     '-lxkbcommon'
-
+                                '-Xlinker',
+                                '-rpath',
+                                '/usr/local/lib',
+                                '-lm',
+                                '-lX11',
+                                '-lrt',
+                                '-lXtst',
+                                '-lXinerama',
+                                '-lxkbcommon'
                         ]
-
-
                 )
 
 setup(name='xdotool_py', version='0.01', \
-        ext_modules=[keymodule])
+        ext_modules=[xdotoolc],
+        packages=['xdotool_py'],
+        package_dir={'xdotool_py': 'xdotool_py'})
