@@ -127,8 +127,8 @@ def __charToUnicodeCodePoint(c):
     Return unicode code point in format that xdotool understands.
     E.g. 'Ä' -> "U00C4"
     '''
-    #TODO: this is REALLY slow. Maybe create c function to handle this
-    return "U%04X" % ord(c)
+    #TODO: still slow :(
+    return _xdotool.inttoutf8(ord(c))
 
 def __charToXdotoolSymbol(char):
     ''' Change char to a value that xdotool understand'''

@@ -3,6 +3,47 @@
 #include "cmd.h"
 #include "xdo.h"
 
+
+static PyObject* inttoutf8(PyObject *self, PyObject *args){
+
+    int input;
+    int tmp, i;
+    int nums[4];
+    char output[6];
+    output[0] = 'U';
+    output[5] = '\0';
+
+    if(!PyArg_ParseTuple(args, "i", &input))
+        Py_RETURN_FALSE;
+
+    nums[0] = input >> 12;
+
+    nums[1] = input & 0x0F00;
+    nums[1] = nums[1] >> 8;
+
+    nums[2] = input & 0x00F0;
+    nums[2] = nums[2] >> 4;
+
+    nums[3] = input & 0x000F;
+
+
+    for(i = 0; i<4;){
+        tmp = nums[i];
+        if(tmp < 10){
+            // ascii number are 48 - 57
+            // so if we want char of 2. add 2 to 48
+            output[++i] = 48 + tmp;
+        }else{
+            // ascii A-F are 65-70. so add 10 - 15 to 55 to get the character
+            output[++i] = 55 + tmp;
+        }
+
+    }
+
+
+    return Py_BuildValue("s", output);
+}
+
 static PyObject* movemouse(PyObject *self, PyObject *args, PyObject *kwargs){
     // Mouse position coordinates
     int x;
@@ -139,6 +180,7 @@ static char xdotool_docs[] =
     "Testing this doc!\n";
 
 static PyMethodDef xdotool_funcs[] = {
+    {"inttoutf8", (PyCFunction) inttoutf8, METH_VARARGS, xdotool_docs},
     {"keyboardinput", (PyCFunction) keyboardinput, METH_VARARGS | METH_KEYWORDS, xdotool_docs},
     {"mouseclick", (PyCFunction) mouseclick, METH_VARARGS | METH_KEYWORDS, xdotool_docs},
     {"movemouse", (PyCFunction) movemouse, METH_VARARGS | METH_KEYWORDS, xdotool_docs},
