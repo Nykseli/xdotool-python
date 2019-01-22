@@ -2,6 +2,8 @@
 import xdotool_py
 
 import time
+
+xdotool_py.THREADING = True
 # time.sleep(5)
 # xdotool_py.leftMouseClick()
 # xdotool_py.leftMouseClick()

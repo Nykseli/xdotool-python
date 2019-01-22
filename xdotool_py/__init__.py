@@ -1,9 +1,9 @@
 
 import _xdotool
 
-#from threading import Thread
+from threading import Thread
 
-THREADING = False #TODO: threading support
+THREADING = False
 
 ### xdotool key symbols ###
 
@@ -245,30 +245,73 @@ def __charToXdotoolSymbol(char):
 
 def inputSingleChar(c):
     '''Change char to a value that xdotool understand and simulate input with it'''
+    if THREADING:
+        Thread(target=__inputSingleChar, args=(c,)).start()
+    else:
+        __inputSingleChar(c)
+
+def __inputSingleChar(c):
     symbol = __charToXdotoolSymbol(c)
     _xdotool.keyboardinput("key", symbol)
 
-
 def inputSingleSymbol(symbol):
+    if THREADING:
+        Thread(target=__inputSingleSymbol, args=(symbol,)).start()
+    else:
+        __inputSingleChar(symbol)
+
+def __inputSingleSymbol(symbol):
     _xdotool.keyboardinput("key", symbol)
 
 def inputString(inputString):
     ''' Input string to device with simulating keyboard input'''
+    if THREADING:
+        Thread(target=__inputString, args=(inputString,)).start()
+    else:
+        __inputString(inputString)
+
+def __inputString(inputString):
     for c in inputString:
         inputSingleChar(c)
 
 def setMousePosition(x, y):
+    if THREADING:
+        Thread(target=__setMousePosition, args=(x, y)).start()
+    else:
+        __setMousePosition(x, y)
+
+def __setMousePosition(x, y):
    #TODO: error if x or y is not type of int and >= 0
     _xdotool.movemouse(x, y)
 
 def moveMouseX(pixel_amount):
     ''' Move cursor on x axis by pixel_amount. Positive is right, negative is left '''
+    if THREADING:
+        Thread(target=__moveMouseX, args=(pixel_amount,)).start()
+    else:
+        __moveMouseX(pixel_amount)
+
+def __moveMouseX(pixel_amount):
+    ''' Move cursor on x axis by pixel_amount. Positive is right, negative is left '''
     _xdotool.movemouse_relative(pixel_amount, 0)
 
 def moveMouseY(pixel_amount):
     ''' Move cursor on y axis by pixel_amount. Positive amount is down, negative is up '''
+    if THREADING:
+        Thread(target=__moveMouseY, args=(pixel_amount,)).start()
+    else:
+        __moveMouseY(pixel_amount)
+
+def __moveMouseY(pixel_amount):
+    ''' Move cursor on y axis by pixel_amount. Positive amount is down, negative is up '''
     _xdotool.movemouse_relative(0, pixel_amount)
 
 def leftMouseClick():
+    if THREADING:
+        Thread(target=__leftMouseClick).start()
+    else:
+        __leftMouseClick()
+
+def __leftMouseClick():
     _xdotool.mouseclick(1)
 
