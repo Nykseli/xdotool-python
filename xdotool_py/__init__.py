@@ -128,7 +128,7 @@ def __charToUnicodeCodePoint(c):
     E.g. 'Ä' -> "U00C4"
     '''
     #TODO: still slow :(
-    return _xdotool.inttoutf8(ord(c))
+    return _xdotool.inttoutf8(c)
 
 def __charToXdotoolSymbol(char):
     ''' Change char to a value that xdotool understand'''

@@ -6,6 +6,7 @@
 
 static PyObject* inttoutf8(PyObject *self, PyObject *args){
 
+    PyObject* utfchar;
     int input;
     int tmp, i;
     int nums[4];
@@ -13,8 +14,10 @@ static PyObject* inttoutf8(PyObject *self, PyObject *args){
     output[0] = 'U';
     output[5] = '\0';
 
-    if(!PyArg_ParseTuple(args, "i", &input))
+    if(!PyArg_ParseTuple(args, "U", &utfchar))
         Py_RETURN_FALSE;
+
+    input = PyUnicode_READ_CHAR(utfchar, 0);
 
     nums[0] = input >> 12;
 
